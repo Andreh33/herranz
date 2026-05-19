@@ -15,11 +15,10 @@ export function Hero() {
     target: ref,
     offset: ['start start', 'end start'],
   })
-  // Parallax sutil — sin overlap entre secciones
-  const headlineY = useTransform(scrollYProgress, [0, 1], [0, -60])
-  const subY = useTransform(scrollYProgress, [0, 1], [0, -30])
-  const opacity = useTransform(scrollYProgress, [0, 0.6, 0.9], [1, 0.85, 0])
-  const bgY = useTransform(scrollYProgress, [0, 1], [0, 120])
+  // Parallax muy sutil
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, -40])
+  const opacity = useTransform(scrollYProgress, [0, 0.6, 0.95], [1, 0.8, 0])
+  const bgY = useTransform(scrollYProgress, [0, 1], [0, 100])
 
   return (
     <section
@@ -54,82 +53,85 @@ export function Hero() {
           Alquileres Herranz · {new Date().getFullYear()}
         </span>
       </div>
+      {/* Texto vertical decorativo izquierda */}
+      <div className="absolute left-6 top-1/2 -translate-y-1/2 hidden lg:block z-10">
+        <span className="block [writing-mode:vertical-rl] text-[0.6rem] tracking-[0.5em] uppercase text-blanco/15">
+          Madrid · CAM
+        </span>
+      </div>
 
       {/* Puntos decorativos */}
-      <div className="absolute top-32 left-10 w-2 h-2 rounded-full bg-turquesa shadow-turquesa-sm hidden lg:block z-10" />
-      <div className="absolute bottom-32 right-32 w-2 h-2 rounded-full bg-amarillo shadow-amarillo-sm hidden lg:block animate-pulse z-10" />
+      <div className="absolute top-32 left-24 w-1.5 h-1.5 rounded-full bg-turquesa shadow-turquesa-sm hidden lg:block z-10" />
+      <div className="absolute bottom-32 right-24 w-1.5 h-1.5 rounded-full bg-amarillo shadow-amarillo-sm hidden lg:block animate-pulse z-10" />
 
+      {/* CONTENIDO PRINCIPAL — CENTRADO */}
       <motion.div
-        className="relative z-10 max-w-[1500px] mx-auto px-6 lg:px-10 w-full pt-28 lg:pt-24 pb-24 lg:pb-20"
-        style={{ opacity }}
+        className="relative z-10 w-full max-w-[1500px] mx-auto px-6 lg:px-10 pt-24 lg:pt-20 pb-20 lg:pb-16 text-center flex flex-col items-center"
+        style={{ opacity, y: contentY }}
       >
         {/* Label */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 2.8, ease: [0.16, 1, 0.3, 1] }}
-          className="flex items-center gap-3 mb-8"
+          className="flex items-center justify-center flex-wrap gap-x-3 gap-y-2 mb-10 px-2"
         >
-          <span className="block w-8 h-px bg-turquesa" />
-          <span className="text-[0.62rem] tracking-[0.45em] uppercase text-turquesa">
+          <span className="hidden sm:block w-6 lg:w-8 h-px bg-turquesa" />
+          <span className="text-[0.58rem] sm:text-[0.62rem] tracking-[0.35em] sm:tracking-[0.45em] uppercase text-turquesa text-center">
             Mobiliario para eventos · San Sebastián de los Reyes
           </span>
-          <span className="hidden md:block w-8 h-px bg-turquesa" />
+          <span className="hidden sm:block w-6 lg:w-8 h-px bg-turquesa" />
         </motion.div>
 
         {/* Headline */}
-        <motion.div style={{ y: headlineY }}>
-          <h1 className="font-display text-display-2xl leading-[0.95] tracking-[-0.03em]">
-            <AnimatedText
-              text="Tu evento merece"
-              el="span"
-              className="block text-blanco"
-              delay={3.0}
-              stagger={0.08}
-            />
-            <AnimatedText
-              text="lo extraordinario."
-              el="span"
-              className="block italic text-turquesa"
-              delay={3.4}
-              stagger={0.08}
-            />
-          </h1>
-        </motion.div>
+        <h1 className="font-display text-display-xl leading-[0.95] tracking-[-0.025em]">
+          <AnimatedText
+            text="Tu evento merece"
+            el="span"
+            className="block text-blanco"
+            delay={3.0}
+            stagger={0.08}
+          />
+          <AnimatedText
+            text="lo extraordinario."
+            el="span"
+            className="block italic text-turquesa"
+            delay={3.4}
+            stagger={0.08}
+          />
+        </h1>
 
         {/* Subheadline */}
-        <motion.div style={{ y: subY }}>
-          <motion.p
-            className="mt-8 max-w-xl text-blanco-3 text-base lg:text-lg leading-relaxed"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 4.4, ease: [0.16, 1, 0.3, 1] }}
-          >
-            Alquiler de sillas, mesas y mobiliario premium para bodas, comuniones
-            y eventos en Madrid. Más de 20 años haciendo que cada celebración
-            sea inolvidable.
-          </motion.p>
+        <motion.p
+          className="mt-10 max-w-2xl text-blanco-3 text-base lg:text-lg leading-relaxed"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 4.4, ease: [0.16, 1, 0.3, 1] }}
+        >
+          Alquiler de sillas, mesas y mobiliario premium para bodas, comuniones
+          y eventos en Madrid. Más de 20 años haciendo que cada celebración
+          sea inolvidable.
+        </motion.p>
 
-          {/* CTAs */}
-          <motion.div
-            className="mt-10 flex flex-wrap items-center gap-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 4.7, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <MagneticButton variant="amarillo" href="#presupuesto" cursorLabel="PEDIR">
-              Solicitar Presupuesto
-              <ArrowRight size={16} />
-            </MagneticButton>
-            <MagneticButton variant="ghost" href="#catalogo" cursorLabel="VER">
-              Ver Catálogo
-            </MagneticButton>
-          </motion.div>
+        {/* CTAs */}
+        <motion.div
+          className="mt-12 flex flex-wrap items-center justify-center gap-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 4.7, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <MagneticButton variant="amarillo" href="#presupuesto" cursorLabel="PEDIR">
+            Solicitar Presupuesto
+            <ArrowRight size={16} />
+          </MagneticButton>
+          <MagneticButton variant="ghost" href="#catalogo" cursorLabel="VER">
+            Ver Catálogo
+          </MagneticButton>
         </motion.div>
 
         {/* Stats */}
         <motion.div
-          className="mt-16 lg:mt-24 grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-0 lg:divide-x lg:divide-turquesa/20 max-w-3xl"
+          className="mt-16 lg:mt-20 grid grid-cols-3 gap-6 lg:gap-0 lg:divide-x lg:divide-turquesa/20 w-full max-w-3xl"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 5.0, ease: [0.16, 1, 0.3, 1] }}
@@ -142,7 +144,7 @@ export function Hero() {
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-10"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 5.4 }}
@@ -172,9 +174,9 @@ interface StatProps {
 
 function Stat({ number, suffix, label, sub, isLocation }: StatProps) {
   return (
-    <div className="px-0 lg:px-6 first:lg:pl-0">
+    <div className="px-0 lg:px-8 text-center">
       {!isLocation && number !== undefined ? (
-        <div className="font-display text-[clamp(2.2rem,4.5vw,3.5rem)] text-blanco leading-none flex items-baseline">
+        <div className="font-display text-[clamp(2.2rem,4.5vw,3.5rem)] text-blanco leading-none flex items-baseline justify-center">
           <CounterUp end={number} className="tabular-nums" />
           {suffix && <span className="text-turquesa ml-0.5">{suffix}</span>}
         </div>

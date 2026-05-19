@@ -111,22 +111,26 @@
   100% { transform: translateX(-50%); }
 }
 
-/* === Reset === */
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+/* Base styles — dentro del layer base para no romper specificity de utilities */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
 
-body {
-  background-color: #070707;
-  color: #F8F6F0;
-  font-family: var(--font-body);
-  font-weight: 300;
-  overflow-x: hidden;
-}
+  body {
+    background-color: #070707;
+    color: #F8F6F0;
+    font-family: var(--font-body);
+    font-weight: 300;
+    overflow-x: hidden;
+  }
 
-/* Cursor nativo oculto en desktop */
-@media (pointer: fine) {
-  body { cursor: none; }
-  body * { cursor: none !important; }
+  /* Cursor nativo oculto en desktop */
+  @media (pointer: fine) {
+    body { cursor: none; }
+    body * { cursor: none !important; }
+  }
 }
 
 /* Scrollbar */
