@@ -1,9 +1,10 @@
 'use client'
+import Image from 'next/image'
 import { Check, Sparkles, Heart, PartyPopper } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { SectionReveal } from '@/components/ui/SectionReveal'
 import { AnimatedText } from '@/components/ui/AnimatedText'
-import { GlowCard } from '@/components/ui/GlowCard'
+import { photos } from '@/lib/photos'
 
 interface Servicio {
   icon: LucideIcon
@@ -11,8 +12,8 @@ interface Servicio {
   title: string
   desc: string
   features: string[]
-  visualEmoji: string
-  glow: 'turquesa' | 'amarillo'
+  src: string
+  alt: string
   align: 'left' | 'right'
 }
 
@@ -28,8 +29,8 @@ const servicios: Servicio[] = [
       'Recogida al finalizar el evento',
       'Asesoramiento gratuito por equipo experto',
     ],
-    visualEmoji: '🪑',
-    glow: 'turquesa',
+    src: photos.banqueteElegante,
+    alt: 'Salón de banquete completamente montado',
     align: 'left',
   },
   {
@@ -43,8 +44,8 @@ const servicios: Servicio[] = [
       'Visita previa al lugar sin compromiso',
       'Cobertura en toda la Comunidad de Madrid',
     ],
-    visualEmoji: '💍',
-    glow: 'amarillo',
+    src: photos.parejaBoda,
+    alt: 'Pareja recién casada con ramo de novia al atardecer',
     align: 'right',
   },
   {
@@ -58,8 +59,8 @@ const servicios: Servicio[] = [
       'Stock amplio para fechas concurridas',
       'Precios competitivos y transparentes',
     ],
-    visualEmoji: '🎊',
-    glow: 'turquesa',
+    src: photos.mesaDulce,
+    alt: 'Mesa dulce para comunión',
     align: 'left',
   },
 ]
@@ -111,15 +112,11 @@ function ServicioRow({ servicio, idx }: { servicio: Servicio; idx: number }) {
   const Icon = servicio.icon
   const isRight = servicio.align === 'right'
   return (
-    <div
-      className={`grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center ${
-        isRight ? 'lg:[&>*:first-child]:order-2' : ''
-      }`}
-    >
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
       {/* Texto */}
       <SectionReveal
         direction={isRight ? 'right' : 'left'}
-        className="lg:col-span-6"
+        className={`lg:col-span-6 ${isRight ? 'lg:order-2' : ''}`}
       >
         <p className="text-[0.62rem] tracking-[0.45em] uppercase text-turquesa mb-4">
           {servicio.label}
@@ -148,28 +145,26 @@ function ServicioRow({ servicio, idx }: { servicio: Servicio; idx: number }) {
       <SectionReveal
         direction={isRight ? 'left' : 'right'}
         delay={0.2}
-        className="lg:col-span-6"
+        className={`lg:col-span-6 ${isRight ? 'lg:order-1' : ''}`}
       >
-        <GlowCard glowColor={servicio.glow} className="aspect-[4/3] relative">
-          <div
-            className={`absolute inset-0 bg-gradient-to-br ${
-              servicio.glow === 'turquesa'
-                ? 'from-turquesa-xdark/30 via-negro-200 to-negro-100'
-                : 'from-amarillo-dark/20 via-negro-200 to-negro-100'
-            }`}
+        <div className="relative aspect-[4/3] overflow-hidden border border-white/[0.08]">
+          <Image
+            src={servicio.src}
+            alt={servicio.alt}
+            fill
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            className="object-cover"
           />
-          <div className="absolute inset-0 flex items-center justify-center text-[8rem] opacity-90">
-            {servicio.visualEmoji}
-          </div>
-          <div className="absolute top-6 left-6 w-12 h-12 border border-turquesa/40 flex items-center justify-center bg-negro/50 backdrop-blur-sm">
+          <div className="absolute inset-0 bg-gradient-to-t from-negro/80 via-transparent to-transparent" />
+          <div className="absolute top-6 left-6 w-12 h-12 border border-turquesa/50 flex items-center justify-center bg-negro/60 backdrop-blur-sm">
             <Icon size={18} className="text-turquesa" />
           </div>
-          <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-negro/90 to-transparent">
-            <span className="font-display text-[5rem] text-turquesa/15 leading-none">
+          <div className="absolute bottom-0 left-0 right-0 p-6">
+            <span className="font-display text-[5rem] text-turquesa/40 leading-none">
               0{idx + 1}
             </span>
           </div>
-        </GlowCard>
+        </div>
       </SectionReveal>
     </div>
   )

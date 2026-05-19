@@ -1,28 +1,30 @@
 'use client'
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 import { AnimatedText } from '@/components/ui/AnimatedText'
 import { SectionReveal } from '@/components/ui/SectionReveal'
+import { photos } from '@/lib/photos'
 
 interface GalItem {
-  emoji: string
+  src: string
+  alt: string
   titulo: string
   evento: string
   ratio: string
-  gradient: string
 }
 
 const galeria: GalItem[] = [
-  { emoji: '🪑', titulo: 'Sillas Chiavari doradas', evento: 'Boda en Finca El Pinar', ratio: 'aspect-[4/5]', gradient: 'from-amarillo-dark/30 to-negro-200' },
-  { emoji: '🍽️', titulo: 'Mesa imperial', evento: 'Comunión en Alcobendas', ratio: 'aspect-[4/3]', gradient: 'from-turquesa-xdark/40 to-negro-100' },
-  { emoji: '⛺', titulo: 'Carpa pagoda', evento: 'Evento al aire libre', ratio: 'aspect-[3/4]', gradient: 'from-turquesa-dark/30 to-negro-200' },
-  { emoji: '🌸', titulo: 'Decoración floral', evento: 'Boda civil en jardín', ratio: 'aspect-square', gradient: 'from-amarillo-glow to-negro-200' },
-  { emoji: '🎊', titulo: 'Montaje completo', evento: 'Comunión Madrid', ratio: 'aspect-[4/5]', gradient: 'from-turquesa-glow to-negro-100' },
-  { emoji: '🥂', titulo: 'Barra de bar', evento: 'Cóctel corporativo', ratio: 'aspect-[3/4]', gradient: 'from-amarillo-dark/25 to-negro-200' },
-  { emoji: '🪑', titulo: 'Sillas Cross Back', evento: 'Boda rústica Sanse', ratio: 'aspect-[4/3]', gradient: 'from-piedra/40 to-negro-100' },
-  { emoji: '🎂', titulo: 'Mesa dulce', evento: 'Comunión en Sanse', ratio: 'aspect-square', gradient: 'from-amarillo-glow to-negro-200' },
-  { emoji: '⛺', titulo: 'Carpa + mesas', evento: 'Jardín privado', ratio: 'aspect-[4/5]', gradient: 'from-turquesa-xdark/35 to-negro-100' },
+  { src: photos.mesaCandelabra, alt: 'Mesa con candelabra dorada', titulo: 'Sillas Chiavari + candelabros', evento: 'Boda en Finca El Pinar', ratio: 'aspect-[4/5]' },
+  { src: photos.mesaImperial, alt: 'Mesa imperial larga', titulo: 'Mesa imperial montada', evento: 'Comunión en Alcobendas', ratio: 'aspect-[4/3]' },
+  { src: photos.carpaExterior, alt: 'Carpa pagoda en exterior', titulo: 'Carpa pagoda', evento: 'Evento al aire libre', ratio: 'aspect-[3/4]' },
+  { src: photos.centroFloral, alt: 'Decoración floral en mesas de boda', titulo: 'Decoración floral', evento: 'Boda civil en jardín', ratio: 'aspect-square' },
+  { src: photos.banqueteElegante, alt: 'Banquete elegante completo', titulo: 'Montaje completo', evento: 'Comunión Madrid', ratio: 'aspect-[4/5]' },
+  { src: photos.mesaDulce, alt: 'Mesa dulce y barra de bar', titulo: 'Barra de bar y mesa dulce', evento: 'Cóctel corporativo', ratio: 'aspect-[3/4]' },
+  { src: photos.sillasOutdoor, alt: 'Sillas Cross Back boda rústica', titulo: 'Sillas Cross Back', evento: 'Boda rústica en Sanse', ratio: 'aspect-[4/3]' },
+  { src: photos.candelabraDetalle, alt: 'Candelabra dorado de cristal', titulo: 'Candelabros dorados', evento: 'Comunión en Sanse', ratio: 'aspect-square' },
+  { src: photos.ceremoniaTarima, alt: 'Carpa y tarimas en ceremonia', titulo: 'Carpa + tarima', evento: 'Jardín privado', ratio: 'aspect-[4/5]' },
 ]
 
 export function Galeria() {
@@ -136,15 +138,17 @@ export function Galeria() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="relative w-full max-w-3xl aspect-[4/5] flex items-center justify-center"
+              className="relative w-full max-w-4xl aspect-[4/5] flex items-center justify-center"
               onClick={(e) => e.stopPropagation()}
             >
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${galeria[lightbox].gradient}`}
+              <Image
+                src={galeria[lightbox].src}
+                alt={galeria[lightbox].alt}
+                fill
+                sizes="(min-width: 1024px) 900px, 90vw"
+                className="object-cover"
+                priority
               />
-              <span className="relative text-[16rem]">
-                {galeria[lightbox].emoji}
-              </span>
               <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-negro to-transparent">
                 <p className="text-[0.6rem] tracking-[0.4em] uppercase text-turquesa mb-2">
                   {galeria[lightbox].evento}
@@ -185,12 +189,15 @@ function GaleriaItem({
       data-cursor="cta"
       data-cursor-label="VER"
     >
-      <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient}`} />
-      <div className="absolute inset-0 flex items-center justify-center text-[6rem] transition-transform duration-700 group-hover:scale-110">
-        {item.emoji}
-      </div>
-      <div className="absolute inset-0 bg-negro/80 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+      <Image
+        src={item.src}
+        alt={item.alt}
+        fill
+        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+        className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.08]"
+      />
+      <div className="absolute inset-0 bg-negro/0 group-hover:bg-negro/55 transition-colors duration-500" />
+      <div className="absolute inset-x-0 bottom-0 p-5 translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
         <p className="text-[0.55rem] tracking-[0.35em] uppercase text-turquesa">
           {item.evento}
         </p>

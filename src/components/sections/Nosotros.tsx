@@ -1,8 +1,10 @@
 'use client'
+import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
 import { SectionReveal } from '@/components/ui/SectionReveal'
 import { AnimatedText } from '@/components/ui/AnimatedText'
 import { MagneticButton } from '@/components/ui/MagneticButton'
+import { photos } from '@/lib/photos'
 
 export function Nosotros() {
   return (
@@ -77,15 +79,18 @@ export function Nosotros() {
           {/* Columna visual */}
           <div className="lg:col-span-5 relative">
             <SectionReveal direction="right">
-              <div className="relative">
-                {/* Primera card placeholder */}
+              <div className="relative pr-3 pb-16 lg:pb-24">
+                {/* Imagen principal */}
                 <div className="relative aspect-[4/5] overflow-hidden border border-turquesa/20">
-                  <div className="absolute inset-0 bg-gradient-to-br from-turquesa-xdark/40 via-negro-200 to-negro-50" />
-                  <div className="absolute inset-0 bg-noise opacity-[0.04] mix-blend-overlay" />
-                  <div className="absolute inset-0 flex items-center justify-center text-[7rem]">
-                    🪑
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-negro/95 to-transparent">
+                  <Image
+                    src={photos.banqueteElegante}
+                    alt="Montaje de boda con sillas Chiavari y centros florales blancos"
+                    fill
+                    sizes="(min-width: 1024px) 38vw, 100vw"
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-negro/70 via-transparent to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
                     <p className="text-[0.6rem] tracking-[0.4em] uppercase text-turquesa">
                       Nave principal
                     </p>
@@ -93,17 +98,21 @@ export function Nosotros() {
                       San Sebastián de los Reyes
                     </p>
                   </div>
-                  {/* Borde offset */}
+                  {/* Borde offset decorativo */}
                   <div className="absolute -inset-3 border border-turquesa/15 -z-10 pointer-events-none" />
                 </div>
 
-                {/* Segunda card */}
-                <div className="absolute -bottom-12 -right-6 lg:-right-12 w-[60%] aspect-[3/4] overflow-hidden border border-amarillo/30 shadow-deep">
-                  <div className="absolute inset-0 bg-gradient-to-br from-amarillo-dark/30 via-negro-300 to-negro-100" />
-                  <div className="absolute inset-0 flex items-center justify-center text-7xl">
-                    🍽️
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-negro/95 to-transparent">
+                {/* Segunda imagen */}
+                <div className="absolute -bottom-4 -right-2 lg:-right-8 w-[55%] aspect-[3/4] overflow-hidden border border-amarillo/30 shadow-deep">
+                  <Image
+                    src={photos.centroFloral}
+                    alt="Centros florales en mesa de boda"
+                    fill
+                    sizes="(min-width: 1024px) 22vw, 50vw"
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-negro/70 via-transparent to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
                     <p className="text-[0.55rem] tracking-[0.35em] uppercase text-amarillo">
                       Catálogo
                     </p>
@@ -111,7 +120,7 @@ export function Nosotros() {
                 </div>
 
                 {/* Badge flotante */}
-                <div className="absolute -top-6 -left-6 lg:-left-12 w-24 h-24 rounded-full border border-turquesa bg-negro flex flex-col items-center justify-center animate-float z-10">
+                <div className="absolute -top-6 -left-6 lg:-left-10 w-24 h-24 rounded-full border border-turquesa bg-negro flex flex-col items-center justify-center animate-float z-10">
                   <span className="font-display text-2xl text-turquesa leading-none">
                     +20
                   </span>

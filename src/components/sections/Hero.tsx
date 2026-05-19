@@ -1,18 +1,25 @@
 'use client'
 import { useRef } from 'react'
+import Image from 'next/image'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowRight, ArrowDown } from 'lucide-react'
 import { MagneticButton } from '@/components/ui/MagneticButton'
 import { CounterUp } from '@/components/ui/CounterUp'
 import { AnimatedText } from '@/components/ui/AnimatedText'
 import { ParticlesCanvas } from './ParticlesCanvas'
+import { photos } from '@/lib/photos'
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  const headlineY = useTransform(scrollYProgress, [0, 1], ['0%', '40%'])
-  const subY = useTransform(scrollYProgress, [0, 1], ['0%', '80%'])
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0])
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start start', 'end start'],
+  })
+  // Parallax sutil — sin overlap entre secciones
+  const headlineY = useTransform(scrollYProgress, [0, 1], [0, -60])
+  const subY = useTransform(scrollYProgress, [0, 1], [0, -30])
+  const opacity = useTransform(scrollYProgress, [0, 0.6, 0.9], [1, 0.85, 0])
+  const bgY = useTransform(scrollYProgress, [0, 1], [0, 120])
 
   return (
     <section
@@ -20,23 +27,40 @@ export function Hero() {
       id="hero"
       className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-negro"
     >
-      <div className="absolute inset-0 bg-grid-dark opacity-60" />
-      <div className="absolute inset-0 bg-hero-radial" />
+      {/* Imagen de fondo con tinte */}
+      <motion.div
+        className="absolute inset-0 z-0"
+        style={{ y: bgY }}
+        aria-hidden="true"
+      >
+        <Image
+          src={photos.banqueteElegante}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover opacity-[0.18]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-negro/85 via-negro/75 to-negro" />
+      </motion.div>
+
+      <div className="absolute inset-0 bg-grid-dark opacity-50 z-0" />
+      <div className="absolute inset-0 bg-hero-radial z-0" />
       <ParticlesCanvas />
 
       {/* Texto vertical decorativo */}
-      <div className="absolute right-6 top-1/2 -translate-y-1/2 hidden lg:block">
+      <div className="absolute right-6 top-1/2 -translate-y-1/2 hidden lg:block z-10">
         <span className="block rotate-180 [writing-mode:vertical-rl] text-[0.6rem] tracking-[0.5em] uppercase text-blanco/15">
           Alquileres Herranz · {new Date().getFullYear()}
         </span>
       </div>
 
-      {/* Glow esquinas */}
-      <div className="absolute top-32 left-10 w-2 h-2 rounded-full bg-turquesa shadow-turquesa-sm hidden lg:block" />
-      <div className="absolute bottom-32 right-32 w-2 h-2 rounded-full bg-amarillo shadow-amarillo-sm hidden lg:block animate-pulse" />
+      {/* Puntos decorativos */}
+      <div className="absolute top-32 left-10 w-2 h-2 rounded-full bg-turquesa shadow-turquesa-sm hidden lg:block z-10" />
+      <div className="absolute bottom-32 right-32 w-2 h-2 rounded-full bg-amarillo shadow-amarillo-sm hidden lg:block animate-pulse z-10" />
 
       <motion.div
-        className="relative z-10 max-w-[1500px] mx-auto px-6 lg:px-10 w-full pt-28 lg:pt-20 pb-32 lg:pb-24"
+        className="relative z-10 max-w-[1500px] mx-auto px-6 lg:px-10 w-full pt-28 lg:pt-24 pb-24 lg:pb-20"
         style={{ opacity }}
       >
         {/* Label */}
@@ -50,30 +74,26 @@ export function Hero() {
           <span className="text-[0.62rem] tracking-[0.45em] uppercase text-turquesa">
             Mobiliario para eventos · San Sebastián de los Reyes
           </span>
-          <span className="block w-8 h-px bg-turquesa" />
+          <span className="hidden md:block w-8 h-px bg-turquesa" />
         </motion.div>
 
         {/* Headline */}
         <motion.div style={{ y: headlineY }}>
           <h1 className="font-display text-display-2xl leading-[0.95] tracking-[-0.03em]">
-            <span className="block overflow-hidden">
-              <AnimatedText
-                text="Tu evento merece"
-                el="span"
-                className="block text-blanco"
-                delay={3.0}
-                stagger={0.08}
-              />
-            </span>
-            <span className="block overflow-hidden">
-              <AnimatedText
-                text="lo extraordinario."
-                el="span"
-                className="block italic text-turquesa"
-                delay={3.4}
-                stagger={0.08}
-              />
-            </span>
+            <AnimatedText
+              text="Tu evento merece"
+              el="span"
+              className="block text-blanco"
+              delay={3.0}
+              stagger={0.08}
+            />
+            <AnimatedText
+              text="lo extraordinario."
+              el="span"
+              className="block italic text-turquesa"
+              delay={3.4}
+              stagger={0.08}
+            />
           </h1>
         </motion.div>
 
@@ -109,7 +129,7 @@ export function Hero() {
 
         {/* Stats */}
         <motion.div
-          className="mt-20 lg:mt-32 grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-0 lg:divide-x lg:divide-turquesa/20 max-w-4xl"
+          className="mt-16 lg:mt-24 grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-0 lg:divide-x lg:divide-turquesa/20 max-w-3xl"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 5.0, ease: [0.16, 1, 0.3, 1] }}
@@ -122,10 +142,11 @@ export function Hero() {
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 5.4 }}
+        style={{ opacity }}
       >
         <span className="text-[0.6rem] tracking-[0.4em] uppercase text-blanco-4">
           Descubre
