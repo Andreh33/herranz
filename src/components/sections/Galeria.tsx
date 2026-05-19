@@ -185,7 +185,7 @@ function GaleriaItem({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.7, delay: (idx % 3) * 0.1, ease: [0.16, 1, 0.3, 1] }}
-      className={`group relative block w-full ${item.ratio} overflow-hidden border border-white/[0.06] hover:border-turquesa/30 transition-colors break-inside-avoid`}
+      className={`photo-glow ${idx % 3 === 1 ? 'photo-glow-amarillo' : ''} group relative block w-full ${item.ratio} overflow-hidden border border-white/[0.06] hover:border-turquesa/30 transition-colors break-inside-avoid`}
       data-cursor="cta"
       data-cursor-label="VER"
     >

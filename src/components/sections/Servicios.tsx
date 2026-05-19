@@ -147,7 +147,7 @@ function ServicioRow({ servicio, idx }: { servicio: Servicio; idx: number }) {
         delay={0.2}
         className={`lg:col-span-6 ${isRight ? 'lg:order-1' : ''}`}
       >
-        <div className="relative aspect-[4/3] overflow-hidden border border-white/[0.08]">
+        <div className={`photo-glow ${idx === 1 ? 'photo-glow-amarillo' : ''} photo-glow-strong relative aspect-[4/3] overflow-hidden border border-white/[0.08]`}>
           <Image
             src={servicio.src}
             alt={servicio.alt}

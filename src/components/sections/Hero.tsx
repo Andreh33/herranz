@@ -45,6 +45,14 @@ export function Hero() {
 
       <div className="absolute inset-0 bg-grid-dark opacity-50 z-0" />
       <div className="absolute inset-0 bg-hero-radial z-0" />
+
+      {/* Orbes de luz flotantes */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <span className="orb orb-turquesa orb-anim-1 w-[420px] h-[420px] -top-20 -left-20" />
+        <span className="orb orb-amarillo orb-anim-2 w-[360px] h-[360px] top-1/3 right-[-10%]" />
+        <span className="orb orb-turquesa orb-anim-3 w-[300px] h-[300px] bottom-10 left-[40%] opacity-60" />
+      </div>
+
       <ParticlesCanvas />
 
       {/* Texto vertical decorativo */}

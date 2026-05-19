@@ -167,7 +167,7 @@ function ItemCard({ item, idx }: { item: Item; idx: number }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -30 }}
       transition={{ duration: 0.55, delay: idx * 0.04, ease: [0.16, 1, 0.3, 1] }}
-      className="group relative aspect-[3/4] overflow-hidden border border-white/[0.06] hover:border-turquesa/40 transition-colors duration-500 bg-negro-100"
+      className="photo-glow group relative aspect-[3/4] overflow-hidden border border-white/[0.06] hover:border-turquesa/40 transition-colors duration-500 bg-negro-100"
       data-cursor="cta"
       data-cursor-label="PEDIR"
     >

@@ -237,6 +237,107 @@ html.lenis-smooth { scroll-behavior: auto; }
   transform: rotate(45deg);
 }
 
+/* === GLOW DETRÁS DE FOTOS ===
+   box-shadow se pinta FUERA del elemento → no lo corta overflow:hidden.
+   Combinamos 4 capas: edge fino, glow medio, glow exterior, acento amarillo. */
+.photo-glow {
+  position: relative;
+  box-shadow:
+    0 0 0 1px rgba(0, 191, 179, 0.08),
+    0 0 32px 6px rgba(0, 191, 179, 0.22),
+    0 0 80px 24px rgba(0, 191, 179, 0.13),
+    0 0 40px 12px rgba(245, 197, 24, 0.06);
+  transition: box-shadow 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: photo-glow-pulse 6s ease-in-out infinite;
+}
+.photo-glow:hover,
+.group:hover .photo-glow {
+  box-shadow:
+    0 0 0 1px rgba(0, 191, 179, 0.18),
+    0 0 50px 12px rgba(0, 191, 179, 0.45),
+    0 0 110px 36px rgba(0, 191, 179, 0.22),
+    0 0 60px 18px rgba(245, 197, 24, 0.12);
+}
+
+.photo-glow-amarillo {
+  box-shadow:
+    0 0 0 1px rgba(245, 197, 24, 0.10),
+    0 0 32px 6px rgba(245, 197, 24, 0.28),
+    0 0 80px 24px rgba(245, 197, 24, 0.13),
+    0 0 40px 12px rgba(0, 191, 179, 0.06);
+}
+.photo-glow-amarillo:hover,
+.group:hover .photo-glow-amarillo {
+  box-shadow:
+    0 0 0 1px rgba(245, 197, 24, 0.20),
+    0 0 50px 12px rgba(245, 197, 24, 0.45),
+    0 0 110px 36px rgba(245, 197, 24, 0.22),
+    0 0 60px 18px rgba(0, 191, 179, 0.10);
+}
+
+.photo-glow-strong {
+  box-shadow:
+    0 0 0 1px rgba(0, 191, 179, 0.10),
+    0 0 60px 14px rgba(0, 191, 179, 0.32),
+    0 0 130px 40px rgba(0, 191, 179, 0.18),
+    0 0 70px 20px rgba(245, 197, 24, 0.10);
+}
+.photo-glow-strong:hover {
+  box-shadow:
+    0 0 0 1px rgba(0, 191, 179, 0.22),
+    0 0 80px 20px rgba(0, 191, 179, 0.50),
+    0 0 180px 60px rgba(0, 191, 179, 0.28),
+    0 0 100px 30px rgba(245, 197, 24, 0.18);
+}
+
+.photo-glow-strong.photo-glow-amarillo {
+  box-shadow:
+    0 0 0 1px rgba(245, 197, 24, 0.12),
+    0 0 60px 14px rgba(245, 197, 24, 0.38),
+    0 0 130px 40px rgba(245, 197, 24, 0.18),
+    0 0 70px 20px rgba(0, 191, 179, 0.10);
+}
+
+@keyframes photo-glow-pulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.08); }
+}
+
+/* === ORBES DE LUZ FLOTANTES (Hero background) === */
+.orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  pointer-events: none;
+  will-change: transform;
+}
+.orb-turquesa {
+  background: radial-gradient(circle at center, rgba(0, 191, 179, 0.55), transparent 70%);
+}
+.orb-amarillo {
+  background: radial-gradient(circle at center, rgba(245, 197, 24, 0.35), transparent 70%);
+}
+@keyframes orb-drift-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(120px, 60px) scale(1.15); }
+  66%  { transform: translate(-80px, 120px) scale(0.9); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+@keyframes orb-drift-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-140px, -80px) scale(1.2); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+@keyframes orb-drift-3 {
+  0%   { transform: translate(0, 0) scale(0.9); }
+  40%  { transform: translate(90px, -60px) scale(1.1); }
+  80%  { transform: translate(-50px, 80px) scale(1.0); }
+  100% { transform: translate(0, 0) scale(0.9); }
+}
+.orb-anim-1 { animation: orb-drift-1 22s ease-in-out infinite; }
+.orb-anim-2 { animation: orb-drift-2 28s ease-in-out infinite; }
+.orb-anim-3 { animation: orb-drift-3 32s ease-in-out infinite; }
+
 /* Marquee */
 .marquee-track {
   display: flex;

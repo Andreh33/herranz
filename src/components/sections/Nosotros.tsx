@@ -81,7 +81,7 @@ export function Nosotros() {
             <SectionReveal direction="right">
               <div className="relative pr-3 pb-16 lg:pb-24">
                 {/* Imagen principal */}
-                <div className="relative aspect-[4/5] overflow-hidden border border-turquesa/20">
+                <div className="photo-glow photo-glow-strong relative aspect-[4/5] overflow-hidden border border-turquesa/20">
                   <Image
                     src={photos.banqueteElegante}
                     alt="Montaje de boda con sillas Chiavari y centros florales blancos"
@@ -103,7 +103,7 @@ export function Nosotros() {
                 </div>
 
                 {/* Segunda imagen */}
-                <div className="absolute -bottom-4 -right-2 lg:-right-8 w-[55%] aspect-[3/4] overflow-hidden border border-amarillo/30 shadow-deep">
+                <div className="photo-glow photo-glow-amarillo absolute -bottom-4 -right-2 lg:-right-8 w-[55%] aspect-[3/4] overflow-hidden border border-amarillo/30 shadow-deep">
                   <Image
                     src={photos.centroFloral}
                     alt="Centros florales en mesa de boda"
